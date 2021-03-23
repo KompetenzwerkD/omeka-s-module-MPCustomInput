@@ -35,7 +35,7 @@ In this example for the items of class "Funderfassung", in the item view, the li
 | connectionProperty | Property that connects the subitem to its "parent" |
 | labelProperty | Property that is used as its laben in the subitem listing |
 | codeProperty | Property that is used as the items display title in Omeka S |
-| codeTemplate | Defines the automatically generated item title/code. <parent> will be replaced by the parent items title. <label> will be replaced by the subitems label. <count> will be replaced by the total numer of subitems for the items + 1 |
+| codeTemplate | Defines the automatically generated item title/code. `<parent>` will be replaced by the parent items title. `<label>` will be replaced by the subitems label. `<count>` will be replaced by the total numer of subitems for the items + 1 |
 
 
 ### API credentials
