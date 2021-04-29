@@ -35,25 +35,25 @@ class Module extends AbstractModule
                 "sectionTitle" => "Herstellungsprozesse",
                 "resourceClass" => "Herstellungsprozess",
                 "resourceTemplate" => "Herstellungsprozess",
-                "connectingProperty" => "mp:hatFunderfassung",
+                "connectingProperty" => "mpo:partOfFunderfassung",
                 "labelProperty" => "dcterms:title",
-                "codeProperty" => "mp:hatCode",
-                "codeTemplate" => "<parent>_H_<label>"
+                "codeProperty" => "mpo:hatCode",
+                "codeTemplate" => "<parent>__H_<label>"
             ];
 
             $this->showSubitemList($view, $item, $config);
 
-            $config = [
+            /*$config = [
                 "sectionTitle" => "Materialanalysen",
-                "resourceClass" => "MaterialAnalyse",
+                "resourceClass" => "Objektanalyse",
                 "resourceTemplate" => "Materialanalyse",
-                "connectingProperty" => "mp:hatFunderfassung",
+                "connectingProperty" => "mpo:partOfFunderfassung",
                 "labelProperty" => "dcterms:title",
-                "codeProperty" => "mp:hatCode",
+                "codeProperty" => "mpo:hatCode",
                 "codeTemplate" => "<parent>_MA_<label>"
             ];
 
-            $this->showSubitemList($view, $item, $config);
+	    $this->showSubitemList($view, $item, $config);*/
         }
         elseif ($classLabel === "Herstellungsprozess") {
 
@@ -61,10 +61,10 @@ class Module extends AbstractModule
                 "sectionTitle" => "Herstellungsdetails",
                 "resourceClass" => "Herstellungsdetail",
                 "resourceTemplate" => "Herstellungsdetail",
-                "connectingProperty" => "mp:hatHerstellung",
+                "connectingProperty" => "mpo:partOfProductionProcess",
                 "labelProperty" => "dcterms:title",
-                "codeProperty" => "mp:hatCode",
-                "codeTemplate" => "<parent>_D_<label>"
+                "codeProperty" => "mpo:hatCode",
+                "codeTemplate" => "<parent>__D_<label>"
             ];
             $this->showSubitemList($view, $item, $config);
         }
@@ -73,14 +73,48 @@ class Module extends AbstractModule
                 "sectionTitle" => "Funderfassung",
                 "resourceClass" => "Funderfassung",
                 "resourceTemplate" => "Funderfassung",
-                "connectingProperty" => "mp:hatObjekt",
+                "connectingProperty" => "mpo:hatObjekt",
                 "labelProperty" => "dcterms:title",
-                "codeProperty" => "mp:hatCode",
+                "codeProperty" => "mpo:hatCode",
                 "codeTemplate" => "<parent>_F<count>"
             ];
-            $this->showSubitemList($view, $item, $config);
-        }
+	    $this->showSubitemList($view, $item, $config);
 
+	    $config = [
+		"sectionTitle" => "Objektanalyse",
+		"resourceClass" => "Objektanalyse",
+		"resourceTemplate" => "Objektanalyse",
+		"connectingProperty" => "mpo:hatObjekt",
+		"labelProperty" => "dcterms:title",
+		"codeProperty" => "mpo:hatCode",
+		"codeTemplate" => "<parent>__A_<label>"
+	    ];
+	    $this->showSubitemList($view, $item, $config);
+            
+	}
+	elseif ($classLabel == "Archivalie") {
+		$config = [
+	    	"sectionTitle" => "Schriftdokumente",
+	    	"resourceClass" => "Schriftdokument",
+	    	"resourceTemplate" => "Schriftdokument",
+	    	"connectingProperty" => "mpo:hatArchivalie",
+	    	"labelProperty" => "dcterms:title",
+	    	"codeProperty" => "mpo:hatCode",
+	    	"codeTemplate" => "<parent>  [SD] <label>"
+    		];
+		$this->showSubitemList($view, $item, $config);
+
+		$config = [
+			"sectionTitle" => "Bilddokumente",
+			"resourceClass" => "Bilddokument",
+			"resourceTemplate" => "Bilddokument",
+			"connectingProperty" => "mpo:hatArchivalie",
+			"labelProperty" => "dcterms:title",
+			"codeProperty" => "mpo:hatCode",
+			"codeTemplate" => "<parent> [BD] <label>"
+		];
+		$this->showSubitemList($view, $item, $config);
+	}
     }
 
 

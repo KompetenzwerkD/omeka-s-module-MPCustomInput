@@ -1,7 +1,7 @@
 $( document).ready( function() {
     // api credentials
-    var keyIdentity = 'Mfi7CrxnEEul7ttDfGY0kxs6IiDCRJLh';
-    var keyCredential = 'Q4KWHJzPPLf3Ex3npVuJ51QpMDMEohQ0';
+    var keyIdentity = 'MlGekx6uGkElk0RwDPO1SZdwHtK49pzZ';
+    var keyCredential = 'YIWHkP0Kf63FhuT89uUoqDLL5dmPhQPo';
 
     var url = window.location.href;
     var urlAdmin = url.split("/admin/item")[0];
