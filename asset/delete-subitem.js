@@ -1,13 +1,13 @@
 $( document).ready( function() {
     // api credentials
-    var keyIdentity = 'MlGekx6uGkElk0RwDPO1SZdwHtK49pzZ';
-    var keyCredential = 'YIWHkP0Kf63FhuT89uUoqDLL5dmPhQPo';
 
     var url = window.location.href;
     var urlAdmin = url.split("/admin/item")[0];
 
     $('.mp-delete').click(function(e) {
         e.preventDefault();
+        console.log("delete")
+
         if (confirm("Element '" + e.currentTarget.name + "' löschen")) {
             console.log("delete");
 

@@ -1,7 +1,5 @@
 function setupSubItemCreation(prefix) {
 
-
-
     var subItemTemplate = {
         "o:resource_class": {
             "@id": "http://localhost/api/resource_classes/",

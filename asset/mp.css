@@ -32,3 +32,43 @@
     font-size: 0.9em;
     padding-left:0.5em;
 }
+
+.lit-list-elem {
+    
+    display: none;
+    background-color: white;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #dfdfdf;
+    margin-left: 1em;
+    cursor: pointer;
+}
+
+#lit-list {
+    background-color: white;
+    width: 100%;    
+    border: 1px solid gray;
+    display: none;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.lit-list-elem:hover {
+    background-color: rgb(215, 237, 245);
+}
+
+.mp-del-cell {
+    width: 40px;
+}
+.mp-edit-cell {
+    width: 40px;
+}
+.mp-code-cell {
+    
+}
+.mp-row {
+    
+}
+
+.highlight {
+    background-color:lightpink;
+}

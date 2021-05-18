@@ -17,6 +17,26 @@ class Module extends AbstractModule
             'view.show.after',
             [$this, 'addForms']
             );
+
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Item',
+            'view.edit.after',
+            [$this, 'add_formatting']
+            );
+
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Item',
+            'view.browse.after',
+            [$this, 'add_formatting']
+            );
+        
+        
+    }
+
+    public function add_formatting($event) {
+        $view = $event->getTarget();
+        $view->headScript()->appendFile($view->assetUrl('title-formatting.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
+
     }
 
 
@@ -24,8 +44,13 @@ class Module extends AbstractModule
     {
         $view = $event->getTarget();
         $view->headLink()->appendStylesheet($view->assetUrl('mp.css', 'MPCustomInput'));
+        $view->headScript()->appendFile($view->assetUrl('credentials.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
         $view->headScript()->appendFile($view->assetUrl('add-subitem.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
+        $view->headScript()->appendFile($view->assetUrl('add-reference.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
         $view->headScript()->appendFile($view->assetUrl('delete-subitem.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
+
+        $view->headScript()->appendFile($view->assetUrl('title-formatting.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
+
 
         $item = $event->getTarget()->vars()->resource;
         $classLabel = $item->displayResourceClassLabel();
@@ -78,43 +103,48 @@ class Module extends AbstractModule
                 "codeProperty" => "mpo:hatCode",
                 "codeTemplate" => "<parent>_F<count>"
             ];
-	    $this->showSubitemList($view, $item, $config);
+            $this->showSubitemList($view, $item, $config);
 
-	    $config = [
-		"sectionTitle" => "Objektanalyse",
-		"resourceClass" => "Objektanalyse",
-		"resourceTemplate" => "Objektanalyse",
-		"connectingProperty" => "mpo:hatObjekt",
-		"labelProperty" => "dcterms:title",
-		"codeProperty" => "mpo:hatCode",
-		"codeTemplate" => "<parent>__A_<label>"
-	    ];
-	    $this->showSubitemList($view, $item, $config);
+            $this->showReferenceForm($view, $item);
+
+            /*
+            $config = [
+            "sectionTitle" => "Objektanalyse",
+            "resourceClass" => "Objektanalyse",
+            "resourceTemplate" => "Objektanalyse",
+            "connectingProperty" => "mpo:hatObjekt",
+            "labelProperty" => "dcterms:title",
+            "codeProperty" => "mpo:hatCode",
+            "codeTemplate" => "<parent>__A_<label>"
+            ];
+            $this->showSubitemList($view, $item, $config);
+            */
             
-	}
-	elseif ($classLabel == "Archivalie") {
-		$config = [
-	    	"sectionTitle" => "Schriftdokumente",
-	    	"resourceClass" => "Schriftdokument",
-	    	"resourceTemplate" => "Schriftdokument",
-	    	"connectingProperty" => "mpo:hatArchivalie",
-	    	"labelProperty" => "dcterms:title",
-	    	"codeProperty" => "mpo:hatCode",
-	    	"codeTemplate" => "<parent>  [SD] <label>"
-    		];
-		$this->showSubitemList($view, $item, $config);
+        }
+        elseif ($classLabel == "Archivalie") {
+            $config = [
+                "sectionTitle" => "Schriftdokumente",
+                "resourceClass" => "Schriftd
+                okument",
+                "resourceTemplate" => "Schriftdokument",
+                "connectingProperty" => "mpo:hatArchivalie",
+                "labelProperty" => "dcterms:title",
+                "codeProperty" => "mpo:hatCode",
+                "codeTemplate" => "<parent>  [SD] <label>"
+                ];
+            $this->showSubitemList($view, $item, $config);
 
-		$config = [
-			"sectionTitle" => "Bilddokumente",
-			"resourceClass" => "Bilddokument",
-			"resourceTemplate" => "Bilddokument",
-			"connectingProperty" => "mpo:hatArchivalie",
-			"labelProperty" => "dcterms:title",
-			"codeProperty" => "mpo:hatCode",
-			"codeTemplate" => "<parent> [BD] <label>"
-		];
-		$this->showSubitemList($view, $item, $config);
-	}
+            $config = [
+                "sectionTitle" => "Bilddokumente",
+                "resourceClass" => "Bilddokument",
+                "resourceTemplate" => "Bilddokument",
+                "connectingProperty" => "mpo:hatArchivalie",
+                "labelProperty" => "dcterms:title",
+                "codeProperty" => "mpo:hatCode",
+                "codeTemplate" => "<parent> [BD] <label>"
+            ];
+            $this->showSubitemList($view, $item, $config);
+        }
     }
 
 
@@ -143,6 +173,88 @@ class Module extends AbstractModule
         }
     } 
 
+
+    public function showReferenceForm($view, $item) {
+
+        $connectingPropertyId = $this->getPropertyId($view, "mpo:hatObjekt");
+        $literaturePropertyId = $this->getPropertyId($view, "mpo:hatLiteratur");
+        $refPropertyId = $this->getPropertyId($view, "mpo:hatReferenz");
+        $resourceClassId = $this->getResourceClassId($view, "Literaturverweis");
+        $resourceTemplateId = $this->getTemplateId($view, "Literaturverweis");
+        $codePropertyId = $this->getPropertyId($view, "mpo:hatCode");
+
+
+        echo("<div class='add-container'><h3>Literaturverweise</h3>");
+
+        // get and display reference items
+        //$query = "&property[0][text]=" . $label;
+        $label = $item->title();
+        $items = $view->api()->search('items', [
+            "search" => $label,
+            "resource_class_label" => "Literaturverweis"
+        ]
+        )->getContent();
+
+        echo "<table>";
+        foreach($items as $i) {
+            // check again if item belongs in list
+            if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {
+                $title = $i->title();
+                $urlEdit = $i->url('edit');
+                $url = $i->url('');
+                $code = $i->displayTitle();
+                $element = $i->value("mpo:hatLiteratur");
+
+                echo "<tr class='mp-row'>";
+                echo "<td class='mp-del-cell'><a class='o-icon-delete mp-delete' href='$url' aria-label='Delete' name='$code'></a></td>";
+                echo "<td class='mp-edit-cell'><a class='o-icon-edit mp-edit-link' href='$urlEdit' ></td>";
+                echo "<td class='mp-code-cell'><a href='$url'>$code</a></td>";
+                echo "</tr>";
+
+            }
+        }
+        echo "</table>";
+
+
+
+        // reference input form
+        echo("<input id='lit-input' style='width: 100%;'>");
+        echo("<div id='lit-list'>");
+        $lit = $view->api()->search(
+            'items', [
+                "resource_class_label" => "Literatur"
+            ])
+            ->getContent();
+        
+        
+        foreach ($lit as $litEntry) {
+            $label = $litEntry->displayTitle();
+            $id = $litEntry->id();
+            echo("<li class='lit-list-elem' name='$id'>$label</li>");
+        }
+
+        echo("</div>");
+
+        echo("<input type='hidden' id='referenceConnectingPropertyId' value='$connectingPropertyId'/>");
+        echo("<input type='hidden' id='referenceLiteraturePropertyId' value='$literaturePropertyId'/>");
+        echo("<input type='hidden' id='referenceRefPropertyId' value='$refPropertyId'/>");
+        echo("<input type='hidden' id='referenceCodePropertyId' value='$codePropertyId'/>");
+        echo("<input type='hidden' id='referenceConnectingProperty' value='mpo:hatObjekt'/>");
+        echo("<input type='hidden' id='referenceLiteratureProperty' value='mpo:hatLiteratur'/>");
+        echo("<input type='hidden' id='referenceRefProperty' value='mpo:hatReferenz'/>");
+        echo("<input type='hidden' id='referenceCodeProperty' value='mpo:hatCode'/>");
+
+        echo("<input type='hidden' id='referenceResourceClassId' value='$resourceClassId'/>");
+        echo("<input type='hidden' id='referenceResourceTemplateId' value='$resourceTemplateId'/>");
+
+        echo("<input type='text' id='reference-info'/>");
+        echo("<a class='o-icon-add ' id='add-reference-button' value='Element hinzufügen' href='#'></a>");
+
+
+        echo("</div>");
+    }
+
+
     public function showSubitemList($view, $item, $config) {
 
         $sectionTitle = $config["sectionTitle"];
@@ -162,7 +274,7 @@ class Module extends AbstractModule
 
         // print section title
         echo("<div class='add-container'><h3>$sectionTitle</h3>");
-
+        
         // get and display subitems
         //$query = "&property[0][text]=" . $label;
         $label = $item->title();
