@@ -5,7 +5,7 @@ $( document).ready( function() {
         console.log(this);
     })
 
-    $(".field-meta").each(function () {
+    $(".alternate").each(function () {
         const text = this.innerHTML
         this.innerHTML = text.replaceAll("_", "<br />")
         console.log(this)
@@ -22,4 +22,8 @@ $( document).ready( function() {
         this.innerHTML = text.replaceAll("_", "<br />")
         console.log(this)
     })        
+
+    $(".collapse").each(function () {
+        this.className="expand"
+    })
 })
