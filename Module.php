@@ -165,12 +165,14 @@ class Module extends AbstractModule
         echo("<div class='mp-image-documents'>");
         foreach($items as $i) {
 		// check again if item belongs in list
-            if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {   
+            //if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {   
                 echo("<div class='mp-image'>");
 
                 $title = (string)$i->value("dcterms:title");
+                $display = (string)$i->displayTitle();
                 $media = $i->primaryMedia();
                 $url = $i->url('');
+                $code = substr($display, 0, 5);
 
                 if ($media != null) {
                     $imgUrl = $i->primaryMedia()->thumbnailUrl('medium');
@@ -178,9 +180,9 @@ class Module extends AbstractModule
 
                 }
                 
-                echo("<div class='mp-image-title'><a href='$url'>$title</a></div>");
+                echo("<div class='mp-image-title'><a href='$url'>[$code] $title</a></div>");
                 echo("</div>");
-            }
+            //}
         }
         echo("</div>");
         echo("<div class='mp-divider'></div>");
