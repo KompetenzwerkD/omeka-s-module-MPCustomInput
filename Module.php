@@ -107,6 +107,8 @@ class Module extends AbstractModule
 
             $this->showReferenceForm($view, $item);
 
+            $this->showRelatedDocuments($view, $item);
+
             /*
             $config = [
             "sectionTitle" => "Objektanalyse",
@@ -147,6 +149,63 @@ class Module extends AbstractModule
         }
     }
 
+
+    public function showRelatedDocuments($view, $item) {
+
+        echo("<div class='add-container'><h3>Archivalien</h3>");
+        echo("<h4>Bilder &nbsp;&nbsp;&nbsp; Изображение</h4>");
+        $label = $item->title();
+        $items = $view->api()->search('items', [
+            "search" => $label,
+            "resource_class_label" => "Bilddokument"
+        ]
+        )->getContent();
+
+        echo("<div class='mp-image-documents'>");
+        foreach($items as $i) {
+            // check again if item belongs in list
+            if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {   
+                echo("<div class='mp-image'>");
+
+                $title = $i->title();
+                $media = $i->primaryMedia();
+                $url = $i->url('');
+
+                if ($media != null) {
+                    $imgUrl = $i->primaryMedia()->thumbnailUrl('medium');
+                    echo("<div class='mp-image-thumbnail'><a href='$url'><img src='$imgUrl' /></a></div>");
+
+                }
+                
+                echo("<div class='mp-image-title'><a href='$url'>$title</a></div>");
+                echo("</div>");
+            }
+        }
+        echo("</div>");
+        echo("<div class='mp-divider'></div>");
+        echo("<h4>Schrift &nbsp;&nbsp;&nbsp; Текст</h4>");
+        echo("<div class='mp-text-documents'>");
+        
+        $label = $item->title();
+        $items = $view->api()->search('items', [
+            "search" => $label,
+            "resource_class_label" => "Schriftdokument"
+        ]
+        )->getContent();
+        foreach($items as $i) {
+            // check again if item belongs in list
+            if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {   
+                $title = $i->title();
+                $label = $i->value("dcterms:title");
+                $url = $i->url('');
+                echo("<li><a href='$url'>$label</a></li>");
+            }
+        }
+
+        echo("</div>");
+        echo("<div class='mp-divider'></div>");        
+        echo("</div>");
+    }
 
     private function getPropertyId($view, $propertyName) {
         $prop = $view->api()->search('properties', [

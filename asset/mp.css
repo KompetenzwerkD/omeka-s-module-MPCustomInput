@@ -72,3 +72,21 @@
 .highlight {
     background-color:lightpink;
 }
+
+.mp-image-documents {
+    margin-top: 1em;
+}
+
+.mp-image {
+    float:left;
+    margin: 1em;
+}
+
+.mp-image-title {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.mp-divider {
+    clear:both;
+}
