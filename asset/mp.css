@@ -80,13 +80,16 @@
 .mp-image {
     float:left;
     margin: 1em;
+    width: 200px;
 }
 
 .mp-image-title {
-    text-align: center;
+    text-align: left;
     font-size: 0.8em;
+    line-height: 1.2em;
 }
 
 .mp-divider {
     clear:both;
+    margin-bottom:1em;
 }

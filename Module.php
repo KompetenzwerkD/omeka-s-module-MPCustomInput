@@ -105,10 +105,11 @@ class Module extends AbstractModule
             ];
             $this->showSubitemList($view, $item, $config);
 
-            $this->showReferenceForm($view, $item);
+            //$this->showReferenceForm($view, $item);
 
             $this->showRelatedDocuments($view, $item);
 
+	    $this->showReferenceForm($view, $item);
             /*
             $config = [
             "sectionTitle" => "Objektanalyse",
@@ -163,11 +164,11 @@ class Module extends AbstractModule
 
         echo("<div class='mp-image-documents'>");
         foreach($items as $i) {
-            // check again if item belongs in list
+		// check again if item belongs in list
             if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {   
                 echo("<div class='mp-image'>");
 
-                $title = $i->title();
+                $title = (string)$i->value("dcterms:title");
                 $media = $i->primaryMedia();
                 $url = $i->url('');
 
