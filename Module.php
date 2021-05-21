@@ -93,9 +93,9 @@ class Module extends AbstractModule
             ];
             $this->showSubitemList($view, $item, $config);
         }
-        elseif ($classLabel === "Funde &nbsp;&nbsp;&nbsp; Предметы") {
+        elseif ($classLabel === "Objekt") {
             $config = [
-                "sectionTitle" => "&nbsp;",
+                "sectionTitle" => "Funde &nbsp;&nbsp;&nbsp; Предметы",
                 "resourceClass" => "Funderfassung",
                 "resourceTemplate" => "Funderfassung",
                 "connectingProperty" => "mpo:hatObjekt",
@@ -106,7 +106,7 @@ class Module extends AbstractModule
             $this->showSubitemList($view, $item, $config);
 
             //$this->showReferenceForm($view, $item);
-
+            
             $this->showRelatedDocuments($view, $item);
 
 	    $this->showReferenceForm($view, $item);
@@ -153,7 +153,7 @@ class Module extends AbstractModule
 
     public function showRelatedDocuments($view, $item) {
 
-        echo("<div class='add-container'><h3>(Dokumente &nbsp;&nbsp;&nbsp; Документы</h3>");
+        echo("<div class='add-container'><h3>Dokumente &nbsp;&nbsp;&nbsp; Документы</h3>");
         echo("<h4>Bilder &nbsp;&nbsp;&nbsp; Изображение</h4>");
         $label = $item->title();
         $items = $view->api()->search('items', [
