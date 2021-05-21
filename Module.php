@@ -57,7 +57,7 @@ class Module extends AbstractModule
         if ($classLabel === "Funderfassung") {
 
             $config = [
-                "sectionTitle" => "Herstellungsprozesse",
+                "sectionTitle" => "Herstellungstechniken &nbsp;&nbsp;&nbsp; Техника изготовления",
                 "resourceClass" => "Herstellungsprozess",
                 "resourceTemplate" => "Herstellungsprozess",
                 "connectingProperty" => "mpo:partOfFunderfassung",
@@ -93,9 +93,9 @@ class Module extends AbstractModule
             ];
             $this->showSubitemList($view, $item, $config);
         }
-        elseif ($classLabel === "Objekt") {
+        elseif ($classLabel === "Funde &nbsp;&nbsp;&nbsp; Предметы") {
             $config = [
-                "sectionTitle" => "Funderfassung",
+                "sectionTitle" => "&nbsp;",
                 "resourceClass" => "Funderfassung",
                 "resourceTemplate" => "Funderfassung",
                 "connectingProperty" => "mpo:hatObjekt",
@@ -153,7 +153,7 @@ class Module extends AbstractModule
 
     public function showRelatedDocuments($view, $item) {
 
-        echo("<div class='add-container'><h3>Archivalien</h3>");
+        echo("<div class='add-container'><h3>(Dokumente &nbsp;&nbsp;&nbsp; Документы</h3>");
         echo("<h4>Bilder &nbsp;&nbsp;&nbsp; Изображение</h4>");
         $label = $item->title();
         $items = $view->api()->search('items', [
@@ -244,7 +244,7 @@ class Module extends AbstractModule
         $codePropertyId = $this->getPropertyId($view, "mpo:hatCode");
 
 
-        echo("<div class='add-container'><h3>Literaturverweise</h3>");
+        echo("<div class='add-container'><h3>Literaturverweise &nbsp;&nbsp;&nbsp; Ссылка на литературу</h3>");
 
         // get and display reference items
         //$query = "&property[0][text]=" . $label;
