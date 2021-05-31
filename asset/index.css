@@ -1,0 +1,16 @@
+.mp-index-panel {
+    background-color: #efefef;
+    padding: 2em;
+    margin: 1em;
+    border-radius: 10px;
+    width: 400px;
+    float: left;
+}
+
+.mp-divider {
+    clear: both;
+}
+
+.mp-thesauri-list {
+    margin-top: 2em;
+}
