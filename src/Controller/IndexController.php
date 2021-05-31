@@ -11,7 +11,7 @@ class IndexController extends AbstractActionController
     protected function getItemSetLink($label) {
         $response = $this->api()->searchOne('item_sets', ["search" => $label]);
         $id = $response->getContent()->id();
-        $link = "http://localhost/admin/item?item_set_id=" . $id . "&sort_by=title&sort_order=asc";
+        $link = "item?item_set_id=" . $id . "&sort_by=title&sort_order=asc";
 
         return $link;
     }
@@ -32,7 +32,7 @@ class IndexController extends AbstractActionController
     }
 
     protected function getSearchLinkByResourceClass($resource_class_label) {
-        return "http://localhost/admin/item?resource_class_label[]=" . $resource_class_label;
+        return "item?resource_class_label[]=" . $resource_class_label;
     }
 
 //
@@ -46,7 +46,7 @@ class IndexController extends AbstractActionController
             array_push($thesauri, [
                 "label" => $ts->displayTitle(),
                 "count" => $this->countItemSetItems($ts->id()),
-                "link" => "http://localhost/admin/item?item_set_id=" . $ts->id() . "&sort_by=title&sort_order=asc"
+                "link" => "item?item_set_id=" . $ts->id() . "&sort_by=title&sort_order=asc"
             ]);
         }
 
