@@ -269,6 +269,7 @@ class Module extends AbstractModule
             if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {
                 $title = $i->title();
                 $urlEdit = $i->url('edit');
+                $itemUrl = $i->url('');
                 $ref = $i->value("mpo:hatReferenz");
                 $litElement = $i->value("mpo:hatLiteratur")->valueResource();
                 $litElementTitle = $litElement->value("dcterms:title");
@@ -276,7 +277,7 @@ class Module extends AbstractModule
                 $url = $litElement->url('');
 
                 echo "<tr class='mp-row'>";
-                echo "<td class='mp-del-cell'><a class='o-icon-delete mp-delete' href='$url' aria-label='Delete' name='$code'></a></td>";
+                echo "<td class='mp-del-cell'><a class='o-icon-delete mp-delete' href='$itemUrl' aria-label='Delete' name='$code'></a></td>";
                 echo "<td class='mp-code-cell'><a href='$url'>$code</a>; $ref<div class='mp-ref'>$litElementTitle</div></td>";
                 echo "</tr>";
 
