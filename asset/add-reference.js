@@ -19,10 +19,10 @@ $( document).ready( function() {
     }
 
 
-    $("#lit-input").on('input', function () {
+    $("#lit-input").on('input', _.debounce(function () {
         let value = $("#lit-input").val().toLowerCase();
         litId = "";
-        if (value.length > 3) {
+        if (value.length > 2) {
             let show = false
             $(".lit-list-elem").map(function() {
                 const text = listElemTexts[this.getAttribute("name")]
@@ -64,8 +64,9 @@ $( document).ready( function() {
                 //this.className = "lit-list-elem";
             });
         }
-    });
+    }, 250));
 
+    
     $(".lit-list-elem").click(function (e) {
         console.log(this);
         litId = this.getAttribute("name");
@@ -74,7 +75,7 @@ $( document).ready( function() {
         $(".lit-list-elem").map(function() {
             this.style.display = "none";
         })
-    });
+    })
 
     $("#add-reference-button").click(function (e) {
         e.preventDefault();

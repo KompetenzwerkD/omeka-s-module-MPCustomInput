@@ -55,6 +55,7 @@ class Module extends AbstractModule
         $view->headScript()->appendFile($view->assetUrl('delete-subitem.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
 
         $view->headScript()->appendFile($view->assetUrl('title-formatting.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
+        $view->headScript()->appendFile($view->assetUrl('lodash.js', 'MPCustomInput'), 'text/javascript', ['defer' => 'defer']);
 
 
         $item = $event->getTarget()->vars()->resource;
