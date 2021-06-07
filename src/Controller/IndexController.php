@@ -35,9 +35,6 @@ class IndexController extends AbstractActionController
         return "item?resource_class_label[]=" . $resource_class_label;
     }
 
-//
-// http://localhost/admin/item?fulltext_search=&property%5B0%5D%5Bjoiner%5D=and&property%5B0%5D%5Bproperty%5D=&property%5B0%5D%5Btype%5D=eq&property%5B0%5D%5Btext%5D=&resource_class_id%5B%5D=126&resource_template_id%5B%5D=&item_set_id%5B%5D=&site_id=&owner_id=&numeric%5Bts%5D%5Bgt%5D%5Bpid%5D=&numeric%5Bts%5D%5Bgt%5D%5Bval%5D=&year=&month=&day=&hour=&minute=&second=&offset=&numeric%5Bts%5D%5Blt%5D%5Bpid%5D=&numeric%5Bts%5D%5Blt%5D%5Bval%5D=&year=&month=&day=&hour=&minute=&second=&offset=&numeric%5Bdur%5D%5Bgt%5D%5Bpid%5D=&numeric%5Bdur%5D%5Bgt%5D%5Bval%5D=&years=&months=&days=&hours=&minutes=&seconds=&numeric%5Bdur%5D%5Blt%5D%5Bpid%5D=&numeric%5Bdur%5D%5Blt%5D%5Bval%5D=&years=&months=&days=&hours=&minutes=&seconds=&numeric%5Bivl%5D%5Bpid%5D=&numeric%5Bivl%5D%5Bval%5D=&year=&month=&day=&hour=&minute=&second=&offset=&numeric%5Bint%5D%5Bgt%5D%5Bpid%5D=&numeric%5Bint%5D%5Bgt%5D%5Bval%5D=&integer=&numeric%5Bint%5D%5Blt%5D%5Bpid%5D=&numeric%5Bint%5D%5Blt%5D%5Bval%5D=&integer=&submit=Search
-
     public function indexAction() {
 
         $thesauri = [];

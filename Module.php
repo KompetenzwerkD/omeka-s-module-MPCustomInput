@@ -268,14 +268,15 @@ class Module extends AbstractModule
             if (strpos((string) $i->value("mpo:hatObjekt"), $item->url()) != false) {
                 $title = $i->title();
                 $urlEdit = $i->url('edit');
-                $url = $i->url('');
-                $code = $i->displayTitle();
-                $element = $i->value("mpo:hatLiteratur");
+                $ref = $i->value("mpo:hatReferenz");
+                $litElement = $i->value("mpo:hatLiteratur")->valueResource();
+                $litElementTitle = $litElement->value("dcterms:title");
+                $code = $litElement->displayTitle();
+                $url = $litElement->url('');
 
                 echo "<tr class='mp-row'>";
                 echo "<td class='mp-del-cell'><a class='o-icon-delete mp-delete' href='$url' aria-label='Delete' name='$code'></a></td>";
-                echo "<td class='mp-edit-cell'><a class='o-icon-edit mp-edit-link' href='$urlEdit' ></td>";
-                echo "<td class='mp-code-cell'><a href='$url'>$code</a></td>";
+                echo "<td class='mp-code-cell'><a href='$url'>$code</a>; $ref<div class='mp-ref'>$litElementTitle</div></td>";
                 echo "</tr>";
 
             }
@@ -296,8 +297,9 @@ class Module extends AbstractModule
         
         foreach ($lit as $litEntry) {
             $label = $litEntry->displayTitle();
+            $title = $litEntry->value("dcterms:title");
             $id = $litEntry->id();
-            echo("<li class='lit-list-elem' name='$id'>$label</li>");
+            echo("<li class='lit-list-elem' name='$id'>$title [$label]</li>");
         }
 
         echo("</div>");

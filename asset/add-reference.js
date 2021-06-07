@@ -102,6 +102,8 @@ $( document).ready( function() {
 
             let refValue = $('#reference-info').val();
             let litValue = $('#lit-input').val();
+            litValue = litValue.match(/\[(.*)\]/)[1];
+            console.log(litValue)
 
             var refItem = JSON.parse(JSON.stringify(referenceTemplate));
 
@@ -114,7 +116,7 @@ $( document).ready( function() {
                 "type": "literal",
                 "property_id": parseInt(codePropertyId),
                 "is_public": true,
-                "@value": litValue + " | " + refValue
+                "@value": litValue + "; " + refValue
             }            
             refItem[codePropertyName] = [ codeProperty ];
 

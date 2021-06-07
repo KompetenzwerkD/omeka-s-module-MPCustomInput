@@ -58,6 +58,7 @@
 
 .mp-del-cell {
     width: 40px;
+    vertical-align: top;
 }
 .mp-edit-cell {
     width: 40px;
@@ -92,4 +93,8 @@
 .mp-divider {
     clear:both;
     margin-bottom:1em;
+}
+
+.mp-ref {
+    font-size: 0.8em;
 }
