@@ -8,9 +8,39 @@ use Laminas\View\Model\ViewModel;
 class IndexController extends AbstractActionController
 {
 
-    protected function getItemSetLink($label) {
+    private function getPropertyId($propertyName) {
+        $prop = $this->api()->search('properties', [
+            "term" => $propertyName,
+        ])->getContent();
+        return $prop[0]->id();
+    }
+
+    private function getResourceClassId($propertyName) {
+        $class = $this->api()->search('resource_classes', [
+            "local_name" => $propertyName,
+        ])->getContent();
+        return $class[0]->id();
+    }
+
+    private function getTemplateId($templateName) {
+        $templates = $this->api()->search('resource_templates', [
+            "term" => $templateName,
+        ])->getContent();
+        foreach ($templates as $tmp) {
+            $title = $tmp->label();
+            if ($title == $templateName)
+                return $tmp->id();
+        }
+    } 
+
+    protected function getItemSetId($label) {
         $response = $this->api()->searchOne('item_sets', ["search" => $label]);
         $id = $response->getContent()->id();
+        return $id;        
+    }
+
+    protected function getItemSetLink($label) {
+        $id = $this->getItemSetId($label);
         $link = "item?item_set_id=" . $id . "&sort_by=title&sort_order=asc";
 
         return $link;
@@ -35,6 +65,43 @@ class IndexController extends AbstractActionController
         return "item?resource_class_label[]=" . $resource_class_label;
     }
 
+    protected function buildBaseItem($resourceClass, $template, $itemSet, $codeProperty, $codePrefix) {
+        $item = [];
+
+        $itemSetId = $this->getItemSetId("Objekte");
+        $size = $this->countItemSetItems($itemSetId);
+
+
+        $item['o:item_set'] = [
+            'o:id' => $itemSetId,
+        ];
+        $item['o:resource_class'] = [
+            'o:id' => $this->getResourceClassId($resourceClass),
+        ];
+        $item['o:resource_template'] = [
+            'o:id' => $this->getTemplateId($template),
+        ];
+
+        if ($codePrefix != "") {
+            $item[$codeProperty][0] = [
+                'type' => "literal",
+                'property_id' => $this->getPropertyId($codeProperty),
+                '@value' => $codePrefix . sprintf("%04d", $size+1) . " _ ",
+                'is_private' => false,
+            ];         
+        }
+        else {
+            $item[$codeProperty][0] = [
+                'type' => "literal",
+                'property_id' => $this->getPropertyId($codeProperty),
+                '@value' => "[Code]",
+                'is_private' => false,
+            ];         
+
+        }
+        return $item;
+    }
+
     public function indexAction() {
 
         $thesauri = [];
@@ -46,7 +113,6 @@ class IndexController extends AbstractActionController
                 "link" => "item?item_set_id=" . $ts->id() . "&sort_by=title&sort_order=asc"
             ]);
         }
-
 
         $view = new ViewModel();
         $view->setVariable("objectCount", $this->getItemCount("Objekt"));
@@ -60,4 +126,56 @@ class IndexController extends AbstractActionController
         $view->setVariable("thesauri", $thesauri);
         return $view;
     }
+
+    public function addObjectAction() {
+        $item = $this->buildBaseItem(
+            "Objekt",
+            "Objekt",
+            "Objekte",
+            "mp:hatCode",
+            "F"
+        );
+   
+        $new = $this->api()->create('items', $item)->getContent();
+        return  $this->redirect()->toURL('http://localhost/admin/item/'.$new->id().'/edit');
+    }
+
+    public function addImageDocumentAction() {
+        $item = $this->buildBaseItem(
+            "Bilddokument",
+            "Bilddokument",
+            "Bilddokumente",
+            "mpo:hatCode",
+            "B"
+        );
+   
+        $new = $this->api()->create('items', $item)->getContent();
+        return  $this->redirect()->toURL('http://localhost/admin/item/'.$new->id().'/edit');
+    }
+
+    public function addTextDocumentAction() {
+        $item = $this->buildBaseItem(
+            "Schriftdokument",
+            "Schriftdokument",
+            "Schriftdokumente",
+            "mpo:hatCode",
+            "S"
+        );
+   
+        $new = $this->api()->create('items', $item)->getContent();
+        return  $this->redirect()->toURL('http://localhost/admin/item/'.$new->id().'/edit');
+    }    
+
+    public function addBibliographicRecordAction() {
+        $item = $this->buildBaseItem(
+            "Literatur",
+            "Literatur",
+            "Literatur",
+            "mpo:hatCode",
+            ""
+        );
+   
+        $new = $this->api()->create('items', $item)->getContent();
+        return  $this->redirect()->toURL('http://localhost/admin/item/'.$new->id().'/edit');
+    }    
 }

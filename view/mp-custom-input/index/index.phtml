@@ -6,22 +6,34 @@
 <div class="mp-index-panel">
 <h3><a href="<?php echo $objectsLink ?>">Objekte</a></h3>
 Items in Datenbank: <?php echo $objectCount ?>
+<div class="mp-index-panel-link">
+    <?php echo $this->hyperlink("Add item", $this->url('admin/mp-custom-input/add-object'), ['class' => 'button']); ?>
+</div>
 </div>
 
 <div class="mp-index-panel">
 <h3><a href="<?php echo $imagesLink ?>">Bilddokumente</a></h3>
 Items in Datenbank:  <?php echo $imagesCount ?>
+<div class="mp-index-panel-link">
+    <?php echo $this->hyperlink("Add item", $this->url('admin/mp-custom-input/add-image-document'), ['class' => 'button']); ?>
+</div>
 </div>
 
 <div class="mp-index-panel">
 <h3><a href="<?php echo $textsLink ?>">Schriftdokumente</a></h3>
 Items in Datenbank:  <?php echo $textsCount ?>
+<div class="mp-index-panel-link">
+    <?php echo $this->hyperlink("Add item", $this->url('admin/mp-custom-input/add-text-document'), ['class' => 'button']); ?>
+</div>
 </div>
 
 
 <div class="mp-index-panel">
 <h3><a href="<?php echo $literatureLink ?>">Literatur</a></h3>
 Items in Datenbank:  <?php echo $literatureCount ?>
+<div class="mp-index-panel-link">
+    <?php echo $this->hyperlink("Add item", $this->url('admin/mp-custom-input/add-bibliographic-record'), ['class' => 'button']); ?>
+</div>
 </div>
 
 <div class="mp-divider"></div>
@@ -40,3 +52,9 @@ Items in Datenbank:  <?php echo $literatureCount ?>
 </table>
 
 </div>
+
+<style>
+.mp-index-panel-link {
+    margin-top:1em;
+}
+</style>

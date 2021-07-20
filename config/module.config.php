@@ -36,6 +36,52 @@ return [
                             ],
                         ],
                         'may_terminate' => true,
+                        'child_routes' => [
+                            'add-object' => [
+                                'type' => \Laminas\Router\Http\Literal::class,
+                                'options' => [
+                                    'route' => '/add-object',
+                                    'defaults' =>  [
+                                        '__NAMESPACE__' => 'MPCustomInput\Controller',
+                                        'controller' => Controller\IndexController::class,
+                                        'action' => 'addObject',
+                                    ],
+                                ],
+                            ],
+                            'add-image-document' => [
+                                'type' => \Laminas\Router\Http\Literal::class,
+                                'options' => [
+                                    'route' => '/add-image-document',
+                                    'defaults' =>  [
+                                        '__NAMESPACE__' => 'MPCustomInput\Controller',
+                                        'controller' => Controller\IndexController::class,
+                                        'action' => 'addImageDocument',
+                                    ],
+                                ],
+                            ],
+                            'add-text-document' => [
+                                'type' => \Laminas\Router\Http\Literal::class,
+                                'options' => [
+                                    'route' => '/add-text-document',
+                                    'defaults' =>  [
+                                        '__NAMESPACE__' => 'MPCustomInput\Controller',
+                                        'controller' => Controller\IndexController::class,
+                                        'action' => 'addTextDocument',
+                                    ],
+                                ],
+                            ],
+                            'add-bibliographic-record' => [
+                                'type' => \Laminas\Router\Http\Literal::class,
+                                'options' => [
+                                    'route' => '/add-bibliographic-record',
+                                    'defaults' =>  [
+                                        '__NAMESPACE__' => 'MPCustomInput\Controller',
+                                        'controller' => Controller\IndexController::class,
+                                        'action' => 'addBibliographicRecord',
+                                    ],
+                                ],
+                            ],                            
+                        ],
                     ],
                 ],
             ],

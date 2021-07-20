@@ -69,7 +69,7 @@ class Module extends AbstractModule
                 "connectingProperty" => "mpo:partOfFunderfassung",
                 "labelProperty" => "dcterms:title",
                 "codeProperty" => "mpo:hatCode",
-                "codeTemplate" => "<parent>__H_<label>"
+                "codeTemplate" => "<parent> _ H-<label>"
             ];
 
             $this->showSubitemList($view, $item, $config);
@@ -95,7 +95,7 @@ class Module extends AbstractModule
                 "connectingProperty" => "mpo:partOfProductionProcess",
                 "labelProperty" => "dcterms:title",
                 "codeProperty" => "mpo:hatCode",
-                "codeTemplate" => "<parent>__D_<label>"
+                "codeTemplate" => "<parent> _ D-<label>"
             ];
             $this->showSubitemList($view, $item, $config);
         }
@@ -107,7 +107,7 @@ class Module extends AbstractModule
                 "connectingProperty" => "mpo:hatObjekt",
                 "labelProperty" => "dcterms:title",
                 "codeProperty" => "mpo:hatCode",
-                "codeTemplate" => "<parent>_F<count>"
+                "codeTemplate" => "<parent> _ F<count>"
             ];
             $this->showSubitemList($view, $item, $config);
 
@@ -124,12 +124,13 @@ class Module extends AbstractModule
             "connectingProperty" => "mpo:hatObjekt",
             "labelProperty" => "dcterms:title",
             "codeProperty" => "mpo:hatCode",
-            "codeTemplate" => "<parent>__A_<label>"
+            "codeTemplate" => "<parent> _ A-<label>"
             ];
             $this->showSubitemList($view, $item, $config);
             */
             
         }
+        /*
         elseif ($classLabel == "Archivalie") {
             $config = [
                 "sectionTitle" => "Schriftdokumente",
@@ -139,7 +140,7 @@ class Module extends AbstractModule
                 "connectingProperty" => "mpo:hatArchivalie",
                 "labelProperty" => "dcterms:title",
                 "codeProperty" => "mpo:hatCode",
-                "codeTemplate" => "<parent>  [SD] <label>"
+                "codeTemplate" => "<parent> [SD] <label>"
                 ];
             $this->showSubitemList($view, $item, $config);
 
@@ -153,7 +154,7 @@ class Module extends AbstractModule
                 "codeTemplate" => "<parent> [BD] <label>"
             ];
             $this->showSubitemList($view, $item, $config);
-        }
+        }*/
     }
 
 
